@@ -13,6 +13,7 @@ from launch import LaunchDescription
 from launch.actions import RegisterEventHandler, DeclareLaunchArgument, TimerAction
 from launch.event_handlers import OnProcessExit, OnProcessStart
 from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration
+from launch.conditions import IfCondition
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -89,6 +90,7 @@ def generate_launch_description():
         DeclareLaunchArgument('gui',   default_value='false', description='Start RViz2'),
         DeclareLaunchArgument('gz',    default_value='false', description='USE GAZEBO SIM'),
         DeclareLaunchArgument('rt_host', default_value='192.168.137.50', description='ROBOT_RT_IP'),
+        DeclareLaunchArgument('start_emulator', default_value='true', description='Start emulator'),
     ]
 
     xacro_path = os.path.join(
@@ -145,6 +147,7 @@ def generate_launch_description():
             {"mobile": "none"},
             {"rt_host": LaunchConfiguration('rt_host')},
         ],
+        condition=IfCondition(LaunchConfiguration('start_emulator')),
         output="screen",
     )
 

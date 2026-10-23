@@ -33,6 +33,7 @@ def generate_launch_description():
         DeclareLaunchArgument('use_sim_time', default_value='true', description='Use simulation time'),
         DeclareLaunchArgument('gripper', default_value='none', description='Use gripper'),
         DeclareLaunchArgument('scene_path', default_value='none', description='Relative path to MuJoCo scene XML file (demo/slope_demo_scene.xml)'),
+        DeclareLaunchArgument('start_emulator', default_value='true', description='Start emulator'),
     ]
 
     set_use_sim_time = SetLaunchConfiguration(name='use_sim_time', value='true')
@@ -97,7 +98,7 @@ def generate_launch_description():
             {"mobile":  "none"},
             {"rt_host": LaunchConfiguration('rt_host')},
         ],
-        condition=IfCondition(PythonExpression(["'", LaunchConfiguration('mode'), "' == 'virtual'"])),
+        condition=IfCondition(PythonExpression(["'", LaunchConfiguration('mode'), "' == 'virtual' and '", LaunchConfiguration('start_emulator'), "'.lower() in ('true', '1')"])),
         output="screen",
     )
     

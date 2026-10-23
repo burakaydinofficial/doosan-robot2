@@ -43,6 +43,7 @@ def generate_launch_description():
         DeclareLaunchArgument('gz',         default_value = 'false',     description = 'USE GAZEBO SIM'    ),
         DeclareLaunchArgument('rt_host',    default_value = '192.168.137.50',     description = 'ROBOT_RT_IP'    ),
         DeclareLaunchArgument('remap_tf',   default_value = 'false',     description = 'REMAP TF'    ),
+        DeclareLaunchArgument('start_emulator', default_value = 'true',  description = 'Start emulator'    ),
     ]
     xacro_path = os.path.join( get_package_share_directory('dsr_description2'), 'xacro')
     # gui = LaunchConfiguration("gui")
@@ -111,7 +112,7 @@ def generate_launch_description():
             {"rt_host":  LaunchConfiguration('rt_host')      },
             #parameters_file_path       # 파라미터 설정을 동일이름으로 launch 파일과 yaml 파일에서 할 경우 yaml 파일로 셋팅된다.    
         ],
-        condition=IfCondition(PythonExpression(["'", mode, "' == 'virtual'"])),
+        condition=IfCondition(PythonExpression(["'", mode, "' == 'virtual' and '", LaunchConfiguration('start_emulator'), "'.lower() in ('true', '1')"])),
         output="screen",
     )
 

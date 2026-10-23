@@ -35,6 +35,7 @@ def include_launch_description(context):
             'host': LaunchConfiguration('host'),
             'port': LaunchConfiguration('port'),
             'rt_host': LaunchConfiguration('rt_host'),
+            'start_emulator': LaunchConfiguration('start_emulator'),
         }.items(),
     )]
 
@@ -48,6 +49,7 @@ def generate_launch_description():
         DeclareLaunchArgument('color', default_value='white', description='ROBOT_COLOR'),
         DeclareLaunchArgument('gz',    default_value='false', description='USE GAZEBO SIM'),
         DeclareLaunchArgument('rt_host', default_value='192.168.137.50', description='ROBOT_RT_IP'),
+        DeclareLaunchArgument('start_emulator', default_value='true', description='Start emulator'),
     ]
 
     # Use OpaqueFunction to dynamically calculate the path and include the launch file at launch time    
